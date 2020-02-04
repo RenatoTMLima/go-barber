@@ -1,4 +1,5 @@
 import User from '../models/User';
+import File from '../models/File';
 
 class ProviderController{
    async index(req, res){
@@ -10,7 +11,11 @@ class ProviderController{
             'email',
             'avatar_id'
          ],
-         include: ['avatar']
+         include: [{
+            model: File,
+            as: 'avatar',
+            attributes: ['path', 'name']
+         }]
       })
 
       return res.json(providers);
