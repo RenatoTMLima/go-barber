@@ -25,7 +25,7 @@ class Database {
 
    mongo(){
       this.mongoConnection = mongoose.connect(
-         'mongodb+srv://gobarber:gobarber@cluster0-tutqj.mongodb.net/notifications?retryWrites=true&w=majority',
+         process.env.MONGO_URL,
          {
             useNewUrlParser: true,
             useUnifiedTopology: true,
