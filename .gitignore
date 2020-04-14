@@ -6,6 +6,9 @@
 # Ignore all dotfiles.
 .env
 .*
+
+#node_modules
+node_modules
 # Exclude specific dotfiles that we want to track.
 !deps/**/.*
 !test/fixtures/**/.*
