@@ -18,6 +18,7 @@ node_modules
 !.editorconfig
 !.eslintignore
 !.eslintrc.js
+!.eslintrc.json
 !.flake8
 !.gitattributes
 !.github
