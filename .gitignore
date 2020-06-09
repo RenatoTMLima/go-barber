@@ -5,7 +5,6 @@
 # === Rule for dotfiles ===
 # Ignore all dotfiles.
 .env
-.*
 /tmp/*
 !/tmp/.gitkeep
 
