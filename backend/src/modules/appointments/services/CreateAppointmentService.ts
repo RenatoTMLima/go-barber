@@ -3,6 +3,7 @@ import { startOfHour, isBefore, getHours, format } from 'date-fns';
 import AppError from '@shared/errors/AppError';
 import IAppointmentsRepository from '@modules/appointments/repositories/iAppointmentsRepository';
 import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import Appointment from '../infra/typeorm/entities/Appointment';
 
 interface IRequest {
@@ -19,6 +20,9 @@ class CreateAppointmentService {
 
       @inject('NotificationsRepository')
       private notificationsRepository: INotificationsRepository,
+
+      @inject('CacheProvider')
+      private cacheProvider: ICacheProvider,
    ) {}
 
    public async execute({
@@ -56,12 +60,22 @@ class CreateAppointmentService {
          date: appointmentDate,
       });
 
-      const dateFormated = format(appointmentDate, "dd/MM/yyyy 'às' HH:mm'h'");
+      const dateFormated = format(
+         appointmentDate,
+         "dd 'de' MMMM 'às' HH:mm'h'",
+      );
 
       await this.notificationsRepository.create({
          recipient_id: provider_id,
          content: `Novo agendamento para dia ${dateFormated}`,
       });
+
+      await this.cacheProvider.invalidate(
+         `provider-appointments:${provider_id}:${format(
+            appointmentDate,
+            'yyyy-M-d',
+         )}`,
+      );
 
       return appointment;
    }
