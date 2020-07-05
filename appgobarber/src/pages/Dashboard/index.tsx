@@ -11,6 +11,7 @@ import {
   HeaderTitle,
   UserName,
   ProfileButton,
+  LogOutButton,
   UserAvatar,
   ProvidersList,
   ProvidersListTitle,
@@ -30,7 +31,7 @@ export interface Provider {
 
 const Dashboard: React.FC = () => {
   const [providers, setProviders] = useState<Provider[]>([]);
-  const { signOut, user } = useAuth();
+  const { user, signOut } = useAuth();
 
   const navigation = useNavigation();
 
@@ -62,6 +63,10 @@ const Dashboard: React.FC = () => {
         <ProfileButton onPress={navigateToProfile}>
           <UserAvatar source={{ uri: user.avatar_url }} />
         </ProfileButton>
+
+        <LogOutButton onPress={signOut}>
+          <Icon name="log-out" size={32} color="#f4ede8" />
+        </LogOutButton>
       </Header>
 
       <ProvidersList
